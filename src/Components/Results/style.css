@@ -1,0 +1,25 @@
+#searchContainer {
+  background-color: white;
+  border: 1px solid grey;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.2em;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+}
+
+#searchIcon {
+  color: #3078c6;
+}
+
+#movieName {
+  border-radius: 0px;
+}
+
+.btnNominate {
+  margin-left: 10px;
+}
