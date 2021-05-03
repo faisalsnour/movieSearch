@@ -240,7 +240,31 @@ class Results extends React.Component {
 
     }
 
+    showNominatedList() {
+        if (localStorage.listOfNominatedMovies === undefined) {
 
+        }
+        else {
+            let NominatedMovieArray = JSON.parse(localStorage.getItem("listOfNominatedMovies"));
+            // to check if it returns an array
+            console.log(`[NominatedMovieArray]`, NominatedMovieArray)
+
+            let NominatedContents = "";
+
+            NominatedContents = NominatedMovieArray.map((movie) =>
+                <li key={movie.imdbID} className="list-group-item">
+                    - {movie.Title} ({movie.Year})
+                <button type="button" className="btn btn-primary rounded-0 btnNominate"
+                        onClick={this.cancelMovie} value={movie.imdbID}>
+                        Cancel
+                    </button>
+                </li>
+
+            )
+            this.setState({ listNominated: NominatedContents })
+
+        }
+    }
 
 
 
