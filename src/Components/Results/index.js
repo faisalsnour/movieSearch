@@ -184,6 +184,7 @@ class Results extends React.Component {
         this.addToNominatedList(movieID)
     }
 
+    // this function is used to enable & disable button on Result section
     showButton(movie) {
         if (movie.Nominated === false) {
             return <button type="button" className="btn btn-primary rounded-0 btnNominate"
@@ -273,9 +274,6 @@ class Results extends React.Component {
 
         }
     }
-
-
-
 
     render() {
         return (
