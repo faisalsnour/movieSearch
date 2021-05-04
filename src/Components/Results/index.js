@@ -157,12 +157,6 @@ class Results extends React.Component {
             LocalStorageArray.push(tempLocalStorage)
             console.log(`[Length of LocalStorageArray]:`, LocalStorageArray.length)
 
-            // tempLocalStorage.forEach(item => {
-            //     if (item.imdbID === movieID) {
-            //         let MovieIndex = tempLocalStorage.indexOf(item)
-            //         console.log(`[index]:`, MovieIndex)
-            //     }
-            // })
         }
         this.showNominatedList()
     }
@@ -241,10 +235,8 @@ class Results extends React.Component {
     }
 
     showNominatedList() {
-        if (localStorage.listOfNominatedMovies === undefined) {
+        if (localStorage.listOfNominatedMovies !== undefined) {
 
-        }
-        else {
             let NominatedMovieArray = JSON.parse(localStorage.getItem("listOfNominatedMovies"));
             // to check if it returns an array
             console.log(`[NominatedMovieArray]`, NominatedMovieArray)
