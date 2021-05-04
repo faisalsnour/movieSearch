@@ -184,6 +184,21 @@ class Results extends React.Component {
         this.addToNominatedList(movieID)
     }
 
+    showButton(movie) {
+        if (movie.Nominated === false) {
+            return <button type="button" className="btn btn-primary rounded-0 btnNominate"
+                onClick={this.changeStatus} value={movie.imdbID}>
+                {movie.Nominated ? "Nominated" : "Nominate"}
+            </button>
+        }
+        else {
+            return <button disabled type="button" className="btn btn-primary rounded-0 btnNominate"
+                onClick={this.changeStatus} value={movie.imdbID}>
+                {movie.Nominated ? "Nominated" : "Nominate"}
+            </button>
+        }
+    }
+
     displayMovies = () => {
 
         let contents = "";
@@ -195,10 +210,11 @@ class Results extends React.Component {
             contents = this.state.listMovie.map((movie) =>
                 <li key={movie.imdbID} className="list-group-item">
                     - {movie.Title} ({movie.Year})
-                <button type="button" className="btn btn-primary rounded-0 btnNominate"
+                    {this.showButton(movie)}
+                    {/* <button type="button" className="btn btn-primary rounded-0 btnNominate"
                         onClick={this.changeStatus} value={movie.imdbID}>
                         {movie.Nominated ? "Cancel" : "Nominate"}
-                    </button>
+                    </button> */}
                 </li>
 
             )
