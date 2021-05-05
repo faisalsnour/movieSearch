@@ -75,7 +75,6 @@ class Results extends React.Component {
         }
         else // check the how many movies already exist in localStorage
         {
-
             let currentLocalStorage = JSON.parse(localStorage.getItem("listOfNominatedMovies"));
             if (currentLocalStorage.length <= 4) {
                 console.log("this function is rendered")
@@ -249,7 +248,18 @@ class Results extends React.Component {
 
     }
 
-    cancelMovie() {
+    cancelMovie = (event) => {
+        event.preventDefault();
+        let movieKey = event.target.value
+        let latestLocalStorage = JSON.parse(localStorage.getItem("listOfNominatedMovies"))
+        latestLocalStorage.forEach(movie => {
+            if (movie.imdbID === movieKey) {
+                let index = latestLocalStorage.indexOf(movie)
+                latestLocalStorage.splice(index, 1)
+            }
+        })
+        localStorage.setItem("listOfNominatedMovies", JSON.stringify(latestLocalStorage));
+        this.showNominatedList()
 
     }
 
