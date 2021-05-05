@@ -33,20 +33,22 @@ class Results extends React.Component {
             // console.log(this.state.names)
 
             // temporary list to add new property to objects (movies)
-            this.setState({ temporaryList: response.data.Search })
-            this.setState({
-                temporaryList: this.state.temporaryList.map(movie => ({
-                    ...movie, Nominated: false
-                }))
-            })
+            if (response.data.Search) {
+                this.setState({ temporaryList: response.data.Search })
+                this.setState({
+                    temporaryList: this.state.temporaryList.map(movie => ({
+                        ...movie, Nominated: false
+                    }))
+                })
 
-            // after adding Nominated property to Movie, add it to ListMovie
-            this.setState({ listMovie: this.state.temporaryList })
+                // after adding Nominated property to Movie, add it to ListMovie
+                this.setState({ listMovie: this.state.temporaryList })
 
-            // just to test if the new property has been added
-            console.log(`this is listMovie`, this.state.listMovie[0].Nominated)
-            this.displayMovies()
-            // console.log(this.state.listMovie[0].Title)
+                // just to test if the new property has been added
+                console.log(`this is listMovie`, this.state.listMovie[0].Nominated)
+                this.displayMovies()
+                // console.log(this.state.listMovie[0].Title)
+            }
         })
     }
 
