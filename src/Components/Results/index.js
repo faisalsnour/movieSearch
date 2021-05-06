@@ -44,8 +44,34 @@ class Results extends React.Component {
                 // after adding Nominated property to Movie, add it to ListMovie
                 this.setState({ listMovie: this.state.temporaryList })
 
-                // just to test if the new property has been added
-                console.log(`this is listMovie`, this.state.listMovie[0].Nominated)
+
+                this.displayMovies()
+                // console.log(this.state.listMovie[0].Title)
+            }
+        })
+    }
+
+
+
+    reloadMovies = (search) => {
+
+        return axios.get(`http://www.omdbapi.com/?apikey=254de20d&s=${search}`).then(response => {
+            console.log(response.data.Search)
+            // console.log(this.state.names)
+
+            // temporary list to add new property to objects (movies)
+            if (response.data.Search) {
+                this.setState({ temporaryList: response.data.Search })
+                this.setState({
+                    temporaryList: this.state.temporaryList.map(movie => ({
+                        ...movie, Nominated: false
+                    }))
+                })
+
+                // after adding Nominated property to Movie, add it to ListMovie
+                this.setState({ listMovie: this.state.temporaryList })
+
+
                 this.displayMovies()
                 // console.log(this.state.listMovie[0].Title)
             }
@@ -190,13 +216,15 @@ class Results extends React.Component {
         if (movie.Nominated === false) {
             return <button type="button" className="btn btn-primary rounded-0 btnNominate"
                 onClick={this.changeStatus} value={movie.imdbID}>
-                {movie.Nominated ? "Nominated" : "Nominate"}
+                {/* {movie.Nominated ? "Nominated" : "Nominate"} */}
+                Nominate
             </button>
         }
         else {
             return <button disabled type="button" className="btn btn-primary rounded-0 btnNominate"
                 onClick={this.changeStatus} value={movie.imdbID}>
-                {movie.Nominated ? "Nominated" : "Nominate"}
+                {/* {movie.Nominated ? "Nominated" : "Nominate"} */}
+                Nominated
             </button>
         }
     }
@@ -205,9 +233,70 @@ class Results extends React.Component {
 
         let contents = "";
 
-        if (this.state.listMovie !== undefined && this.state.listMovie.length >= 0) {
+        if (this.state.listItems !== undefined && this.state.listItems.length >= 0) {
 
+            // -----------------------------------------------------------------
             // add if to check between the list here and localStorage ..........
+            if (localStorage.listOfNominatedMovies !== undefined) {
+                let NominatedArray = JSON.parse(localStorage.getItem("listOfNominatedMovies"));
+                let localMovieID = []
+                NominatedArray.forEach(element => {
+                    localMovieID.push(element.imdbID)
+                });
+
+                console.log(`[NominatedArray]`, NominatedArray)
+                console.log(`xxx`, localMovieID)
+
+                // this.setState({
+                //     listMovie: this.state.listMovie.map(movie => {
+                //         NominatedArray.map(localMovie => {
+                //             if (localMovie.imdbID === movie.imdbID) {
+                //                 return { ...movie, Nominated: true }
+                //             }
+                //             return movie
+                //         })
+                //         return movie
+                //     })
+                // })
+
+                console.log(`[localMovieID]`, localMovieID.find(el => el === "tt0489270"));
+
+                this.setState({
+                    listMovie: this.state.listMovie.map(movie => {
+                        if ((localMovieID.find(el => el === movie.imdbID)) === movie.imdbID) {
+                            console.log("got one!!")
+                            return { ...movie, Nominated: true }
+                        }
+                        return movie
+                    })
+                })
+
+
+                // this.setState({
+                //     listMovie: this.state.listMovie.map(movie => {
+                //         if (movie.imdbID === "tt1233227") {
+                //             return { ...movie, Nominated: true }
+                //         }
+                //         return movie
+                //     })
+                // })
+
+            }
+
+
+            // -----------------------------------------------------------------
+
+            // this.setState({
+            //     listMovie: this.state.listMovie.map(movie => {
+            //         if (movie.imdbID === "tt1233227") {
+            //             return { ...movie, Nominated: true }
+            //         }
+            //         return movie
+            //     })
+            // })
+
+            console.log(`[listMovie]`, this.state.listMovie)
+
 
             contents = this.state.listMovie.map((movie) =>
                 <li key={movie.imdbID} className="list-group-item">
@@ -220,9 +309,9 @@ class Results extends React.Component {
                 </li>
 
             )
-            console.log(`this is listItems`, this.state.listItems)
         }
         this.setState({ listItems: contents })
+
 
     }
 
@@ -248,6 +337,7 @@ class Results extends React.Component {
 
     }
 
+
     cancelMovie = (event) => {
         event.preventDefault();
         let movieKey = event.target.value
@@ -261,7 +351,28 @@ class Results extends React.Component {
         localStorage.setItem("listOfNominatedMovies", JSON.stringify(latestLocalStorage));
         this.showNominatedList()
 
+        if (this.state.listMovie !== undefined && this.state.listMovie.length >= 0) {
+            // console.log(`[listMovie after canceling one movie]`, this.state.listMovie)
+
+            this.setState({
+                listMovie: this.state.listMovie.map(movie => {
+                    if (movieKey === movie.imdbID) {
+                        console.log('moviee keyyyyyyyyyyyyyy', { ...movie, Nominated: false })
+
+                        return { ...movie, Nominated: false }
+
+                    }
+                    return movie;
+
+                })
+            })
+
+            console.log(`[Alllll]`, this.state.listMovie)
+        }
+        this.reloadMovies(this.state.searchWord)
+
     }
+
 
     showNominatedList() {
         if (localStorage.listOfNominatedMovies !== undefined) {
