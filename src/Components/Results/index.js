@@ -1,8 +1,6 @@
 import React from 'react'
 import "./style.css"
 import axios from "axios";
-// import Search from "../Search"
-// import Moviee from "../../Components/Moviee"
 import Modal from '../Modal'
 
 class Results extends React.Component {
@@ -424,7 +422,8 @@ class Results extends React.Component {
             <>
                 <div className="container">
                     <Modal show={this.state.show} handleClose={this.hideModal}>
-                        <p>Modal</p>
+                        <b>Congratulations!</b>
+                        <p>You have nominated 5 Movies!!!</p>
                     </Modal>
                     {/* <Search handleSubmit={this.handleChange} /> */}
                     <div className="container" id="searchContainer">
