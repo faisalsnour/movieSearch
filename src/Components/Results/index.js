@@ -3,6 +3,7 @@ import "./style.css"
 import axios from "axios";
 // import Search from "../Search"
 // import Moviee from "../../Components/Moviee"
+import Modal from '../Modal'
 
 class Results extends React.Component {
 
@@ -16,11 +17,20 @@ class Results extends React.Component {
             MovieStatus: "Nominate",
             listItems: "",
             listNominated: "",
-            TargetedMovie: Object
+            TargetedMovie: Object,
+            show: false
             // Nominated: false
         }
+        this.showModal = this.showModal.bind(this);
+        this.hideModal = this.hideModal.bind(this);
     }
+    showModal = () => {
+        this.setState({ show: true });
+    };
 
+    hideModal = () => {
+        this.setState({ show: false });
+    };
 
     componentDidMount() {
         this.showNominatedList()
@@ -44,13 +54,11 @@ class Results extends React.Component {
                 // after adding Nominated property to Movie, add it to ListMovie
                 this.setState({ listMovie: this.state.temporaryList })
 
-
                 this.displayMovies()
                 // console.log(this.state.listMovie[0].Title)
             }
         })
     }
-
 
 
     reloadMovies = (search) => {
@@ -71,14 +79,31 @@ class Results extends React.Component {
                 // after adding Nominated property to Movie, add it to ListMovie
                 this.setState({ listMovie: this.state.temporaryList })
 
-
                 this.displayMovies()
                 // console.log(this.state.listMovie[0].Title)
             }
         })
     }
 
-
+    showBanner = () => {
+        return <div class="modal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Modal body text goes here.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 
     changeStatus = (event) => {
         event.preventDefault();
@@ -118,7 +143,9 @@ class Results extends React.Component {
                 }, 2000);
             }
             else {
-                alert('You cannot exceed 5 nominated movie, please delete to add more')
+                // this.showBanner()
+                // alert("you have already nominated 5 movies")
+                this.showModal()
             }
 
         }
@@ -271,7 +298,6 @@ class Results extends React.Component {
                     })
                 })
 
-
                 // this.setState({
                 //     listMovie: this.state.listMovie.map(movie => {
                 //         if (movie.imdbID === "tt1233227") {
@@ -282,7 +308,6 @@ class Results extends React.Component {
                 // })
 
             }
-
 
             // -----------------------------------------------------------------
 
@@ -297,7 +322,6 @@ class Results extends React.Component {
 
             console.log(`[listMovie]`, this.state.listMovie)
 
-
             contents = this.state.listMovie.map((movie) =>
                 <li key={movie.imdbID} className="list-group-item">
                     - {movie.Title} ({movie.Year})
@@ -311,7 +335,6 @@ class Results extends React.Component {
             )
         }
         this.setState({ listItems: contents })
-
 
     }
 
@@ -336,7 +359,6 @@ class Results extends React.Component {
         event.preventDefault();
 
     }
-
 
     cancelMovie = (event) => {
         event.preventDefault();
@@ -373,7 +395,6 @@ class Results extends React.Component {
 
     }
 
-
     showNominatedList() {
         if (localStorage.listOfNominatedMovies !== undefined) {
 
@@ -402,6 +423,9 @@ class Results extends React.Component {
         return (
             <>
                 <div className="container">
+                    <Modal show={this.state.show} handleClose={this.hideModal}>
+                        <p>Modal</p>
+                    </Modal>
                     {/* <Search handleSubmit={this.handleChange} /> */}
                     <div className="container" id="searchContainer">
                         <p>Movie Title</p>
@@ -433,5 +457,5 @@ class Results extends React.Component {
     }
 }
 
-
 export default Results
+
