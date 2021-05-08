@@ -2,7 +2,7 @@ import React from 'react'
 import "./style.css"
 import axios from "axios";
 import Modal from '../Modal'
-
+import Title from '../Title'
 class Results extends React.Component {
 
     constructor(props) {
@@ -36,7 +36,7 @@ class Results extends React.Component {
 
     getMovies = () => {
 
-        return axios.get(`http://www.omdbapi.com/?apikey=254de20d&s=${this.state.searchWord}`).then(response => {
+        return axios.get(`http://www.omdbapi.com/?apikey=254de20d&type=movie&s=${this.state.searchWord}`).then(response => {
             console.log(response.data.Search)
             // console.log(this.state.names)
 
@@ -242,14 +242,14 @@ class Results extends React.Component {
     // this function is used to enable & disable button on Result section
     showButton(movie) {
         if (movie.Nominated === false) {
-            return <button type="button" className="btn btn-primary rounded-0 btnNominate"
+            return <button style={{ position: "absolute", right: "7px" }} type="button" className="btn btn-success rounded-0 btnNominate"
                 onClick={this.changeStatus} value={movie.imdbID}>
                 {/* {movie.Nominated ? "Nominated" : "Nominate"} */}
                 Nominate
             </button>
         }
         else {
-            return <button disabled type="button" className="btn btn-primary rounded-0 btnNominate"
+            return <button style={{ position: "absolute", right: "7px" }} disabled type="button" className="btn btn-success rounded-0 btnNominate"
                 onClick={this.changeStatus} value={movie.imdbID}>
                 {/* {movie.Nominated ? "Nominated" : "Nominate"} */}
                 Nominated
@@ -324,7 +324,7 @@ class Results extends React.Component {
             console.log(`[listMovie]`, this.state.listMovie)
 
             contents = this.state.listMovie.map((movie) =>
-                <li key={movie.imdbID} className="list-group-item">
+                <li key={movie.imdbID} className="list-group-item" style={{ position: "relative", paddingBottom: "20px" }}>
                     - {movie.Title} ({movie.Year})
                     {this.showButton(movie)}
                     {/* <button type="button" className="btn btn-primary rounded-0 btnNominate"
@@ -417,9 +417,9 @@ class Results extends React.Component {
             let NominatedContents = "";
 
             NominatedContents = NominatedMovieArray.map((movie) =>
-                <li key={movie.imdbID} className="list-group-item">
+                <li key={movie.imdbID} className="list-group-item" style={{ position: "relative", paddingBottom: "20px" }}>
                     - {movie.Title} ({movie.Year})
-                <button type="button" className="btn btn-primary rounded-0 btnNominate"
+                <button style={{ position: "absolute", right: "7px" }} type="button" className="btn btn-primary rounded-0 btnNominate"
                         onClick={this.cancelMovie} value={movie.imdbID}>
                         Cancel
                     </button>
@@ -434,30 +434,38 @@ class Results extends React.Component {
     render() {
         return (
             <>
+                <div id="hero" className="container">
+                    {/* <div id="knowMore" className="row"> */}
+                    {/* <div className="col-7 col-xl-11"> */}
+                    <Title title="The shoppies" />
+                    <div className="container" id="searchContainer">
+                        <p>Movie Title</p>
+                        <form onSubmit={this.handleSubmit}>
+                            <div className="flex" id="formEntries">
+                                <button type="submit" className="btn btn-light rounded-0"><i className="fa fa-search fa-1x" id="searchIcon" aria-hidden="true"></i></button>
+                                <input type="text" className="form-control" id="movieName" placeholder="Enter name of movie" onChange={this.handleChange} />
+                            </div>
+                        </form>
+                    </div>
+                    {/* </div> */}
+                    {/* </div> */}
+                </div>
+                {/* end of hero section */}
                 <div className="container">
                     <Modal show={this.state.show} handleClose={this.hideModal}>
                         <b>Congratulations!🎉</b>
                         <p>You have nominated 5 Movies!!!</p>
                     </Modal>
                     {/* <Search handleSubmit={this.handleChange} /> */}
-                    <div className="container" id="searchContainer">
-                        <p>Movie Title</p>
 
-                        <form onSubmit={this.handleSubmit}>
-                            <div className="flex">
-                                <button type="submit" className="btn btn-light rounded-0"><i className="fa fa-search fa-1x" id="searchIcon" aria-hidden="true"></i></button>
-                                <input type="text" className="form-control" id="movieName" placeholder="Enter name of movie" onChange={this.handleChange} />
-                            </div>
-                        </form>
-                    </div>
 
                     <div className="row">
-                        <div id="results" className="col" style={{ backgroundColor: "grey" }}>
-                            <p>Result for "{this.state.searchWord}"</p>
+                        <div id="results" className="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
+                            <p>Result for "<span style={{ color: "#018060", fontWeight: "bold" }}>{this.state.searchWord}</span>"</p>
 
                             < ul > {this.state.listItems}</ul >
                         </div>
-                        <div id="nominations" className="col">
+                        <div id="nominations" className="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
                             <p>Nomination</p>
                             <ul>
                                 {this.state.listNominated}

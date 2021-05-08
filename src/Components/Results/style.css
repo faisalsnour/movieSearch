@@ -1,6 +1,6 @@
 #searchContainer {
-  background-color: white;
-  border: 1px solid grey;
+  /* background-color: white; */
+  /* border: 1px solid grey; */
   padding-top: 20px;
   padding-bottom: 20px;
   font-family: Arial, Helvetica, sans-serif;
@@ -13,7 +13,7 @@
 }
 
 #searchIcon {
-  color: #3078c6;
+  color: #018060;
 }
 
 #movieName {
@@ -22,4 +22,20 @@
 
 .btnNominate {
   margin-left: 10px;
+}
+
+#hero {
+  /* background-image: url("./background3.png"); */
+  /* position: relative; */
+  height: 300px;
+  /* height: 100vh; */
+  background-color: #fbf7ed;
+  margin-bottom: 40px;
+  border-bottom: 1px solid black;
+
+  /* box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+}
+
+#formEntries {
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
