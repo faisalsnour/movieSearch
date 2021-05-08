@@ -6,8 +6,8 @@ const Modal = ({ handleClose, show, children }) => {
     return (
         <div className={showHideClassName}>
             <section className="modal-main">
-                <div style={{ textAlign: "center" }}> {children}
-                    <button type="button" className="btn btn-primary" onClick={handleClose}>
+                <div style={{ textAlign: "center", marginTop: "10px" }}> {children}
+                    <button type="button" className="btn btn-success mb-3" onClick={handleClose}>
                         Close
         </button>
                 </div>
