@@ -1,0 +1,15 @@
+.footer {
+  background-color: #018060;
+  color: white;
+  position: relative;
+  height: 100px;
+}
+
+#copyright {
+  margin: 0;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
