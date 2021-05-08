@@ -141,9 +141,7 @@ class Results extends React.Component {
                 }, 2000);
             }
             else {
-                // this.showBanner()
-                alert("you have already nominated 5 movies, delete movies to nominate")
-
+                alert("You have already nominated 5 movies, delete movies to nominate!")
             }
 
         }
@@ -434,20 +432,20 @@ class Results extends React.Component {
         return (
             <>
                 <div id="hero" className="container">
-                    {/* <div id="knowMore" className="row"> */}
-                    {/* <div className="col-7 col-xl-11"> */}
-                    <Title title="The shoppies" />
-                    <div className="container" id="searchContainer">
-                        <p>Movie Title</p>
-                        <form onSubmit={this.handleSubmit}>
-                            <div className="flex" id="formEntries">
-                                <button type="submit" className="btn btn-light rounded-0"><i className="fa fa-search fa-1x" id="searchIcon" aria-hidden="true"></i></button>
-                                <input type="text" className="form-control" id="movieName" placeholder="Enter name of movie" onChange={this.handleChange} />
+                    <div className="row">
+                        <div className="col-12">
+                            <Title title="The shoppies" />
+                            <div className="container" id="searchContainer">
+                                <p>Movie Title</p>
+                                <form onSubmit={this.handleSubmit}>
+                                    <div className="flex" id="formEntries">
+                                        <button type="submit" className="btn btn-light rounded-0"><i className="fa fa-search fa-1x" id="searchIcon" aria-hidden="true"></i></button>
+                                        <input type="text" className="form-control" id="movieName" placeholder="Enter name of movie" onChange={this.handleChange} />
+                                    </div>
+                                </form>
                             </div>
-                        </form>
+                        </div>
                     </div>
-                    {/* </div> */}
-                    {/* </div> */}
                 </div>
                 {/* end of hero section */}
                 <div className="container">
