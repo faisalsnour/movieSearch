@@ -460,12 +460,12 @@ class Results extends React.Component {
 
                     <div className="row">
                         <div id="results" className="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
-                            <p>Result for "<span style={{ color: "#018060", fontWeight: "bold" }}>{this.state.searchWord}</span>"</p>
+                            <p style={{ paddingLeft: "30px", fontWeight: "bold" }}>Result for "<span style={{ color: "#018060", fontWeight: "bold" }}>{this.state.searchWord}</span>"</p>
 
                             < ul > {this.state.listItems}</ul >
                         </div>
                         <div id="nominations" className="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
-                            <p>Nomination</p>
+                            <p style={{ paddingLeft: "30px", fontWeight: "bold" }}>Nomination</p>
                             <ul>
                                 {this.state.listNominated}
                             </ul>
