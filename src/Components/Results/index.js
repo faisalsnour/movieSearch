@@ -325,7 +325,7 @@ class Results extends React.Component {
 
             contents = this.state.listMovie.map((movie) =>
                 <li key={movie.imdbID} className="list-group-item" style={{ position: "relative", paddingBottom: "20px" }}>
-                    - {movie.Title} ({movie.Year})
+                    <i style={{ marginRight: "4px" }} class="fas fa-square-full square"></i> {movie.Title} ({movie.Year})
                     {this.showButton(movie)}
                     {/* <button type="button" className="btn btn-primary rounded-0 btnNominate"
                         onClick={this.changeStatus} value={movie.imdbID}>
@@ -418,13 +418,12 @@ class Results extends React.Component {
 
             NominatedContents = NominatedMovieArray.map((movie) =>
                 <li key={movie.imdbID} className="list-group-item" style={{ position: "relative", paddingBottom: "20px" }}>
-                    - {movie.Title} ({movie.Year})
+                    <i style={{ marginRight: "4px" }} class="fas fa-square-full square"></i> {movie.Title} ({movie.Year})
                 <button style={{ position: "absolute", right: "7px" }} type="button" className="btn btn-success rounded-0 btnNominate"
                         onClick={this.cancelMovie} value={movie.imdbID}>
                         Cancel
                     </button>
                 </li>
-
             )
             this.setState({ listNominated: NominatedContents })
 
