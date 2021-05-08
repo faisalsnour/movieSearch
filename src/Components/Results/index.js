@@ -142,8 +142,8 @@ class Results extends React.Component {
             }
             else {
                 // this.showBanner()
-                // alert("you have already nominated 5 movies")
-                this.showModal()
+                alert("you have already nominated 5 movies, delete movies to nominate")
+
             }
 
         }
@@ -193,6 +193,9 @@ class Results extends React.Component {
                     localStorage.setItem("listOfNominatedMovies", JSON.stringify(newLocalStorageValue));
                     // after new movie is added to localStorage run the below function to update nominated list
                     this.showNominatedList()
+                    if (newLocalStorageValue.length === 5) {
+                        this.showModal()
+                    }
                     console.log(`[LocalStorageValue length]`, newLocalStorageValue.length)
                 }
                 else {
@@ -337,13 +340,24 @@ class Results extends React.Component {
     }
 
     handleChange = async (event) => {
-        await (this.setState({ searchValue: event.target.value }))
-        console.log(`searchValue = `, this.state.searchValue)
+        // let temp = this.state.searchValue;
+        let temp = event.target.value;
+        await this.setState({ searchWord: temp })
         console.log(`searchWord = `, this.state.searchWord)
+        if (this.state.searchWord !== "") {
+            console.log("aaa")
+
+            this.getMovies()
+        }
+        else {
+            console.log("xxx")
+        }
+        event.preventDefault();
     }
 
     handleSubmit = async (event) => {
         let temp = this.state.searchValue;
+        this.setState({ searchValue: temp })
         await this.setState({ searchWord: temp })
         console.log(`searchWord = `, this.state.searchWord)
         if (this.state.searchWord !== "") {
@@ -422,7 +436,7 @@ class Results extends React.Component {
             <>
                 <div className="container">
                     <Modal show={this.state.show} handleClose={this.hideModal}>
-                        <b>Congratulations!</b>
+                        <b>Congratulations!🎉</b>
                         <p>You have nominated 5 Movies!!!</p>
                     </Modal>
                     {/* <Search handleSubmit={this.handleChange} /> */}
@@ -439,7 +453,7 @@ class Results extends React.Component {
 
                     <div className="row">
                         <div id="results" className="col" style={{ backgroundColor: "grey" }}>
-                            <p>Result for ""</p>
+                            <p>Result for "{this.state.searchWord}"</p>
 
                             < ul > {this.state.listItems}</ul >
                         </div>
