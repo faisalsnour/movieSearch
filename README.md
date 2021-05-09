@@ -14,11 +14,13 @@ This single-page web application allows user to search for movies and nominate t
 
 ## Features:
 
-The website displays the following:
+The website has the following features:
 
-1.
-2.
-3.
+1. Provides simple, clean and polished User Interface
+2. Enables users to search for movies only and shows results promptly
+3. Allows user to nominate up to five movies and stores the nominated movies on web broswers
+4. Disables nominate buttons for selected movies, and provides ability to cancel nominated movies
+5. Displays a banner once 5 movies are nominated
 
 ## Screenshots:
 
