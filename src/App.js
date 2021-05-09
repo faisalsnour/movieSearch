@@ -1,4 +1,3 @@
-import './App.css';
 import Wrapper from './Components/Wrapper'
 import Results from './Components/Results'
 import Footer from './Components/Footer'

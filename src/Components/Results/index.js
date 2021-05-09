@@ -79,27 +79,6 @@ class Results extends React.Component {
         })
     }
 
-    // function to show 
-    showBanner = () => {
-        return <div class="modal" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Modal title</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Modal body text goes here.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
-
     // to change the status of movie
     changeStatus = (event) => {
         event.preventDefault();
@@ -114,8 +93,6 @@ class Results extends React.Component {
             })
 
             this.toggleButtonValue(movieKey)
-
-
             // setTimeout(() => {
             //     this.toggleButtonValue(movieKey)
             // }, 1000);
@@ -135,7 +112,7 @@ class Results extends React.Component {
 
                 setTimeout(() => {
                     this.toggleButtonValue(movieKey)
-                }, 1000);
+                }, 100);
             }
             else {
                 alert("You have already nominated 5 movies, delete movies to nominate!")
@@ -217,14 +194,14 @@ class Results extends React.Component {
     // this function is used to enable & disable button on Result section
     showButton(movie) {
         if (movie.Nominated === false) {
-            return <button style={{ position: "absolute", right: "7px" }} type="button" className="btn btn-success rounded-0 btnNominate"
+            return <button style={{ position: "absolute", right: "7px" }} type="button" name="Nominate" className="btn btn-success rounded-0 btnNominate"
                 onClick={this.changeStatus} value={movie.imdbID}>
                 Nominate
             </button>
 
         }
         else {
-            return <button style={{ position: "absolute", right: "7px" }} disabled type="button" className="btn btn-success rounded-0 btnNominate"
+            return <button style={{ position: "absolute", right: "7px" }} disabled type="button" name="Nominated" className="btn btn-success rounded-0 btnNominate"
                 onClick={this.changeStatus} value={movie.imdbID}>
                 Nominated
         </button>
@@ -316,6 +293,7 @@ class Results extends React.Component {
         this.reloadMovies(this.state.searchWord)
     }
 
+    // function to show and display a list of nominated movies
     showNominatedList() {
         if (localStorage.listOfNominatedMovies !== undefined) {
 
@@ -327,11 +305,10 @@ class Results extends React.Component {
                 <Flip right>
 
                     <li key={movie.imdbID} className="list-group-item" style={{ position: "relative", paddingBottom: "20px" }}>
-                        {/* <i style={{ marginRight: "4px" }} class="fas fa-square-full square"></i> */}
                         <img style={{ marginRight: "10px" }} src={movie.Poster} alt={movie.Title} width="150px" height="150px" onError={(e) => { e.target.onerror = null; e.target.src = "https://via.placeholder.com/150" }}></img>
 
                         {movie.Title} ({movie.Year})
-                    <button style={{ position: "absolute", right: "7px" }} type="button" className="btn btn-success rounded-0 btnNominate"
+                    <button style={{ position: "absolute", right: "7px" }} type="button" name="Cancel" className="btn btn-success rounded-0 btnNominate"
                             onClick={this.cancelMovie} value={movie.imdbID}>
                             Cancel
                     </button>
@@ -354,7 +331,7 @@ class Results extends React.Component {
                                 <p>Movie Title</p>
                                 <form onSubmit={this.handleSubmit}>
                                     <div className="flex" id="formEntries">
-                                        <button type="submit" className="btn btn-light rounded-0"><i className="fa fa-search fa-1x" id="searchIcon" aria-hidden="true"></i></button>
+                                        <button type="submit" className="btn btn-light rounded-0" name="Search"><i className="fa fa-search fa-1x" id="searchIcon" name="Search" aria-hidden="true"></i></button>
                                         <input type="text" className="form-control" id="movieName" placeholder="Enter name of movie" onChange={this.handleChange} />
                                     </div>
                                 </form>
