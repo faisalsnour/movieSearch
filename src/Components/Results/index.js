@@ -3,6 +3,7 @@ import "./style.css"
 import axios from "axios";
 import Modal from '../Modal'
 import Title from '../Title'
+import Flip from 'react-reveal/Flip';
 class Results extends React.Component {
 
     constructor(props) {
@@ -17,7 +18,6 @@ class Results extends React.Component {
             listNominated: "",
             TargetedMovie: Object,
             show: false
-            // Nominated: false
         }
         this.showModal = this.showModal.bind(this);
         this.hideModal = this.hideModal.bind(this);
@@ -36,9 +36,8 @@ class Results extends React.Component {
 
     getMovies = () => {
 
+        // to make API call
         return axios.get(`http://www.omdbapi.com/?apikey=254de20d&type=movie&s=${this.state.searchWord}`).then(response => {
-            console.log(response.data.Search)
-            // console.log(this.state.names)
 
             // temporary list to add new property to objects (movies)
             if (response.data.Search) {
@@ -59,11 +58,11 @@ class Results extends React.Component {
     }
 
 
+    // reload list of movies after one is nominated
     reloadMovies = (search) => {
 
-        return axios.get(`http://www.omdbapi.com/?apikey=254de20d&s=${search}`).then(response => {
-            console.log(response.data.Search)
-            // console.log(this.state.names)
+        // to make API call
+        return axios.get(`http://www.omdbapi.com/?apikey=254de20d&type=movie&s=${search}`).then(response => {
 
             // temporary list to add new property to objects (movies)
             if (response.data.Search) {
@@ -78,11 +77,11 @@ class Results extends React.Component {
                 this.setState({ listMovie: this.state.temporaryList })
 
                 this.displayMovies()
-                // console.log(this.state.listMovie[0].Title)
             }
         })
     }
 
+    // function to show 
     showBanner = () => {
         return <div class="modal" tabindex="-1">
             <div class="modal-dialog">
@@ -103,18 +102,16 @@ class Results extends React.Component {
         </div>
     }
 
+    // to change the status of movie
     changeStatus = (event) => {
         event.preventDefault();
 
         // check if localStorage exists first, if undefined execute the code, if not check the how many movies are listed already in LocalStorage
         if (localStorage.listOfNominatedMovies === undefined) {
-            console.log("this function is rendered")
             const movieKey = event.target.value;
-            console.log(`[movie key]:`, movieKey)
 
             this.state.listMovie.forEach(item => {
                 if (item.imdbID === movieKey) {
-                    console.log(`item id`, item.imdbID, `[item nominated value before change]`, item.Nominated)
                 }
             })
 
@@ -129,19 +126,18 @@ class Results extends React.Component {
         {
             let currentLocalStorage = JSON.parse(localStorage.getItem("listOfNominatedMovies"));
             if (currentLocalStorage.length <= 4) {
-                console.log("this function is rendered")
                 const movieKey = event.target.value;
-                console.log(`[movie key]:`, movieKey)
 
                 this.state.listMovie.forEach(item => {
                     if (item.imdbID === movieKey) {
-                        console.log(`item id`, item.imdbID, `[item nominated value before change]`, item.Nominated)
                     }
                 })
 
+                // this.toggleButtonValue(movieKey)
+
                 setTimeout(() => {
                     this.toggleButtonValue(movieKey)
-                }, 2000);
+                }, 1000);
             }
             else {
                 alert("You have already nominated 5 movies, delete movies to nominate!")
@@ -151,8 +147,8 @@ class Results extends React.Component {
 
     }
 
+    // function to add a selected movie to nominated list
     addToNominatedList = movieID => {
-
         let newItem;
         // To look for and return matching movie from the list
         this.state.listMovie.forEach(movie => {
@@ -163,28 +159,21 @@ class Results extends React.Component {
 
         // Add the object found to TargetedMovie
         this.setState({ TargetedMovie: newItem })
-        console.log(`[Value of TargetedMovie]:`, this.state.TargetedMovie)
-
-        console.log(`[newItem to be added]`, movieID)
 
         // Add TargetedMovie object into an array and save in LocalStorage
         if (this.state.TargetedMovie.Nominated === true) {
             // check first if localStorage DOES NOT exists, if not create LocalStorage and add the value of TargetedMovie
             if (localStorage.listOfNominatedMovies === undefined) {
-                console.log("localStorage does not exit")
                 let nominatedMovie = [];
                 nominatedMovie.push(this.state.TargetedMovie)
                 localStorage.setItem("listOfNominatedMovies", JSON.stringify(nominatedMovie));
             }
             else // if localStorage exists, obtain the value of LocalStorage and then add new movie to it
             {
-                console.log("localStorage DOES exit")
                 let newLocalStorageValue = [];
                 let oldLocalStorageValue = JSON.parse(localStorage.getItem("listOfNominatedMovies"));
-                console.log(`[Length of oldLocalStorageValue]:`, oldLocalStorageValue.length)
                 // check if localStorage already has 5 nominated movies
                 if (oldLocalStorageValue.length <= 4) {
-                    console.log(`[type of oldLocalStorageValue]:`, typeof (oldLocalStorageValue))
                     oldLocalStorageValue.forEach(item => {
                         newLocalStorageValue.push(item)
                     })
@@ -197,22 +186,16 @@ class Results extends React.Component {
                     if (newLocalStorageValue.length === 5) {
                         this.showModal()
                     }
-                    console.log(`[LocalStorageValue length]`, newLocalStorageValue.length)
                 }
                 else {
                     alert('You cannot exceed 5 nominated movie, please delete to add more')
                 }
-
             }
-
         }
         else {
             let tempLocalStorage = JSON.parse(localStorage.getItem("listOfNominatedMovies"));
-            console.log(`[tempLocalStorage]:`, typeof (tempLocalStorage))
             let LocalStorageArray = [];
             LocalStorageArray.push(tempLocalStorage)
-            console.log(`[Length of LocalStorageArray]:`, LocalStorageArray.length)
-
         }
         this.showNominatedList()
     }
@@ -328,17 +311,19 @@ class Results extends React.Component {
             console.log(`[listMovie]`, this.state.listMovie)
 
             contents = this.state.listMovie.map((movie) =>
-                <li key={movie.imdbID} className="list-group-item" style={{ position: "relative", paddingBottom: "20px" }}>
-                    {/* <i style={{ marginRight: "4px" }} class="fas fa-square-full square"></i> */}
-                    <img style={{ marginRight: "10px" }} src={movie.Poster} alt={movie.Title} width="150px" height="150px" onError={(e) => { e.target.onerror = null; e.target.src = "https://via.placeholder.com/150" }}></img>
-                    {movie.Title} ({movie.Year})
+                <Flip left>
+
+                    <li key={movie.imdbID} className="list-group-item" style={{ position: "relative", paddingBottom: "20px" }}>
+                        {/* <i style={{ marginRight: "4px" }} class="fas fa-square-full square"></i> */}
+                        <img style={{ marginRight: "10px" }} src={movie.Poster} alt={movie.Title} width="150px" height="150px" onError={(e) => { e.target.onerror = null; e.target.src = "https://via.placeholder.com/150" }}></img>
+                        {movie.Title} ({movie.Year})
                     {this.showButton(movie)}
-                    {/* <button type="button" className="btn btn-primary rounded-0 btnNominate"
+                        {/* <button type="button" className="btn btn-primary rounded-0 btnNominate"
                         onClick={this.changeStatus} value={movie.imdbID}>
                         {movie.Nominated ? "Cancel" : "Nominate"}
                     </button> */}
-                </li>
-
+                    </li>
+                </Flip>
             )
         }
         this.setState({ listItems: contents })
@@ -423,16 +408,19 @@ class Results extends React.Component {
             let NominatedContents = "";
 
             NominatedContents = NominatedMovieArray.map((movie) =>
-                <li key={movie.imdbID} className="list-group-item" style={{ position: "relative", paddingBottom: "20px" }}>
-                    {/* <i style={{ marginRight: "4px" }} class="fas fa-square-full square"></i> */}
-                    <img style={{ marginRight: "10px" }} src={movie.Poster} alt={movie.Title} width="150px" height="150px" onError={(e) => { e.target.onerror = null; e.target.src = "https://via.placeholder.com/150" }}></img>
+                <Flip right>
 
-                    {movie.Title} ({movie.Year})
+                    <li key={movie.imdbID} className="list-group-item" style={{ position: "relative", paddingBottom: "20px" }}>
+                        {/* <i style={{ marginRight: "4px" }} class="fas fa-square-full square"></i> */}
+                        <img style={{ marginRight: "10px" }} src={movie.Poster} alt={movie.Title} width="150px" height="150px" onError={(e) => { e.target.onerror = null; e.target.src = "https://via.placeholder.com/150" }}></img>
+
+                        {movie.Title} ({movie.Year})
                 <button style={{ position: "absolute", right: "7px" }} type="button" className="btn btn-success rounded-0 btnNominate"
-                        onClick={this.cancelMovie} value={movie.imdbID}>
-                        Cancel
+                            onClick={this.cancelMovie} value={movie.imdbID}>
+                            Cancel
                     </button>
-                </li>
+                    </li>
+                </Flip>
             )
             this.setState({ listNominated: NominatedContents })
 
@@ -470,8 +458,8 @@ class Results extends React.Component {
                     <div className="row">
                         <div id="results" className="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
                             <p style={{ paddingLeft: "30px", fontWeight: "bold" }}>Result for "<span style={{ color: "#018060", fontWeight: "bold" }}>{this.state.searchWord}</span>"</p>
-
                             < ul > {this.state.listItems}</ul >
+
                         </div>
                         <div id="nominations" className="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
                             <p style={{ paddingLeft: "30px", fontWeight: "bold" }}>Nomination</p>
