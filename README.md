@@ -24,4 +24,4 @@ The following pictures show the web application's appearance and functionality:
 
 ## Live URL of the deployed application:
 
-[Click here]()
+[Click here](https://theshoppies-faisal.herokuapp.com/)
