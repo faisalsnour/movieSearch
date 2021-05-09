@@ -118,9 +118,12 @@ class Results extends React.Component {
                 }
             })
 
-            setTimeout(() => {
-                this.toggleButtonValue(movieKey)
-            }, 2000);
+            this.toggleButtonValue(movieKey)
+
+
+            // setTimeout(() => {
+            //     this.toggleButtonValue(movieKey)
+            // }, 1000);
         }
         else // check the how many movies already exist in localStorage
         {
@@ -245,13 +248,15 @@ class Results extends React.Component {
                 {/* {movie.Nominated ? "Nominated" : "Nominate"} */}
                 Nominate
             </button>
+
         }
         else {
             return <button style={{ position: "absolute", right: "7px" }} disabled type="button" className="btn btn-success rounded-0 btnNominate"
                 onClick={this.changeStatus} value={movie.imdbID}>
                 {/* {movie.Nominated ? "Nominated" : "Nominate"} */}
-                Nominated
-            </button>
+            Nominated
+        </button>
+
         }
     }
 
@@ -419,7 +424,10 @@ class Results extends React.Component {
 
             NominatedContents = NominatedMovieArray.map((movie) =>
                 <li key={movie.imdbID} className="list-group-item" style={{ position: "relative", paddingBottom: "20px" }}>
-                    <i style={{ marginRight: "4px" }} class="fas fa-square-full square"></i> {movie.Title} ({movie.Year})
+                    {/* <i style={{ marginRight: "4px" }} class="fas fa-square-full square"></i> */}
+                    <img style={{ marginRight: "10px" }} src={movie.Poster} alt={movie.Title} width="150px" height="150px" onError={(e) => { e.target.onerror = null; e.target.src = "https://via.placeholder.com/150" }}></img>
+
+                    {movie.Title} ({movie.Year})
                 <button style={{ position: "absolute", right: "7px" }} type="button" className="btn btn-success rounded-0 btnNominate"
                         onClick={this.cancelMovie} value={movie.imdbID}>
                         Cancel
