@@ -37,3 +37,7 @@ The following pictures show the web application's appearance and functionality:
 ## Live URL of the deployed application:
 
 [Click here](https://theshoppies-faisal.herokuapp.com/)
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
