@@ -26,11 +26,13 @@ The website has the following features:
 
 The following pictures show the web application's appearance and functionality:
 
-![]()
+![A picture shows the default home page](./img/homepage.png)
 
-![]()
+![A picture shows the result list after a movie is searched](./img/results.png)
 
-![]()
+![A picture shows a list of nominated movies](./img/nominatedMovie.png)
+
+![A picture shows a banner after five movies are nominated](./img/banner.png)
 
 ## Live URL of the deployed application:
 

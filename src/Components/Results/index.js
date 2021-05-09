@@ -364,7 +364,7 @@ class Results extends React.Component {
                 </div>
                 <div className="container">
                     <Modal show={this.state.show} handleClose={this.hideModal}>
-                        <b>Congratulations!🎉</b>
+                        <b>🎉 Congratulations! 🎉</b>
                         <p>You have nominated 5 Movies!!!</p>
                     </Modal>
                     <div className="row">
