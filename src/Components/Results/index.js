@@ -331,7 +331,7 @@ class Results extends React.Component {
                                 <p>Movie Title</p>
                                 <form onSubmit={this.handleSubmit}>
                                     <div className="flex" id="formEntries">
-                                        <button type="submit" className="btn btn-light rounded-0" name="Search"><i className="fa fa-search fa-1x" id="searchIcon" name="Search" aria-hidden="true"></i></button>
+                                        <button type="submit" className="btn btn-light rounded-0" name="search"><i className="fa fa-search fa-1x" id="searchIcon" name="search" aria-hidden="true"></i></button>
                                         <input type="text" className="form-control" id="movieName" placeholder="Enter name of movie" onChange={this.handleChange} />
                                     </div>
                                 </form>
