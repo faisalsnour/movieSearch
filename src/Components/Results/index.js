@@ -319,11 +319,14 @@ class Results extends React.Component {
             //     })
             // })
 
+
             console.log(`[listMovie]`, this.state.listMovie)
 
             contents = this.state.listMovie.map((movie) =>
                 <li key={movie.imdbID} className="list-group-item" style={{ position: "relative", paddingBottom: "20px" }}>
-                    <i style={{ marginRight: "4px" }} class="fas fa-square-full square"></i> {movie.Title} ({movie.Year})
+                    {/* <i style={{ marginRight: "4px" }} class="fas fa-square-full square"></i> */}
+                    <img style={{ marginRight: "10px" }} src={movie.Poster} alt={movie.Title} width="150px" height="150px" ></img>
+                    {movie.Title} ({movie.Year})
                     {this.showButton(movie)}
                     {/* <button type="button" className="btn btn-primary rounded-0 btnNominate"
                         onClick={this.changeStatus} value={movie.imdbID}>
