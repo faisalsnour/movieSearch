@@ -87,15 +87,7 @@ class Results extends React.Component {
         if (localStorage.listOfNominatedMovies === undefined) {
             const movieKey = event.target.value;
 
-            this.state.listMovie.forEach(item => {
-                if (item.imdbID === movieKey) {
-                }
-            })
-
             this.toggleButtonValue(movieKey)
-            // setTimeout(() => {
-            //     this.toggleButtonValue(movieKey)
-            // }, 1000);
         }
         else // check the how many movies already exist in localStorage
         {
