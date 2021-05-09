@@ -325,7 +325,7 @@ class Results extends React.Component {
             contents = this.state.listMovie.map((movie) =>
                 <li key={movie.imdbID} className="list-group-item" style={{ position: "relative", paddingBottom: "20px" }}>
                     {/* <i style={{ marginRight: "4px" }} class="fas fa-square-full square"></i> */}
-                    <img style={{ marginRight: "10px" }} src={movie.Poster} alt={movie.Title} width="150px" height="150px" ></img>
+                    <img style={{ marginRight: "10px" }} src={movie.Poster} alt={movie.Title} width="150px" height="150px" onError={(e) => { e.target.onerror = null; e.target.src = "https://via.placeholder.com/150" }}></img>
                     {movie.Title} ({movie.Year})
                     {this.showButton(movie)}
                     {/* <button type="button" className="btn btn-primary rounded-0 btnNominate"
