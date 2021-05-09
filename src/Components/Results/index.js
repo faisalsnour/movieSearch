@@ -52,11 +52,9 @@ class Results extends React.Component {
                 this.setState({ listMovie: this.state.temporaryList })
 
                 this.displayMovies()
-                // console.log(this.state.listMovie[0].Title)
             }
         })
     }
-
 
     // reload list of movies after one is nominated
     reloadMovies = (search) => {
@@ -200,23 +198,16 @@ class Results extends React.Component {
         this.showNominatedList()
     }
 
+    // to change the value for button from nominate to nominated
     toggleButtonValue = movieID => {
 
         this.setState({
             listMovie: this.state.listMovie.map(movie => {
                 if (movieID === movie.imdbID) {
                     return { ...movie, Nominated: !movie.Nominated }
-
                 }
                 return movie;
             })
-        })
-
-        // below is to just make sure the value Nominated for item has been changed
-        this.state.listMovie.forEach(item => {
-            if (item.imdbID === movieID) {
-                console.log(`item id`, item.imdbID, `[item nominated value after change]`, item.Nominated)
-            }
         })
 
         this.displayMovies()
@@ -228,7 +219,6 @@ class Results extends React.Component {
         if (movie.Nominated === false) {
             return <button style={{ position: "absolute", right: "7px" }} type="button" className="btn btn-success rounded-0 btnNominate"
                 onClick={this.changeStatus} value={movie.imdbID}>
-                {/* {movie.Nominated ? "Nominated" : "Nominate"} */}
                 Nominate
             </button>
 
@@ -236,21 +226,19 @@ class Results extends React.Component {
         else {
             return <button style={{ position: "absolute", right: "7px" }} disabled type="button" className="btn btn-success rounded-0 btnNominate"
                 onClick={this.changeStatus} value={movie.imdbID}>
-                {/* {movie.Nominated ? "Nominated" : "Nominate"} */}
-            Nominated
+                Nominated
         </button>
 
         }
     }
 
+    // function to display searched movies
     displayMovies = () => {
 
         let contents = "";
 
         if (this.state.listItems !== undefined && this.state.listItems.length >= 0) {
 
-            // -----------------------------------------------------------------
-            // add if to check between the list here and localStorage ..........
             if (localStorage.listOfNominatedMovies !== undefined) {
                 let NominatedArray = JSON.parse(localStorage.getItem("listOfNominatedMovies"));
                 let localMovieID = []
@@ -258,90 +246,33 @@ class Results extends React.Component {
                     localMovieID.push(element.imdbID)
                 });
 
-                console.log(`[NominatedArray]`, NominatedArray)
-                console.log(`xxx`, localMovieID)
-
-                // this.setState({
-                //     listMovie: this.state.listMovie.map(movie => {
-                //         NominatedArray.map(localMovie => {
-                //             if (localMovie.imdbID === movie.imdbID) {
-                //                 return { ...movie, Nominated: true }
-                //             }
-                //             return movie
-                //         })
-                //         return movie
-                //     })
-                // })
-
-                console.log(`[localMovieID]`, localMovieID.find(el => el === "tt0489270"));
-
                 this.setState({
                     listMovie: this.state.listMovie.map(movie => {
                         if ((localMovieID.find(el => el === movie.imdbID)) === movie.imdbID) {
-                            console.log("got one!!")
                             return { ...movie, Nominated: true }
                         }
                         return movie
                     })
                 })
-
-                // this.setState({
-                //     listMovie: this.state.listMovie.map(movie => {
-                //         if (movie.imdbID === "tt1233227") {
-                //             return { ...movie, Nominated: true }
-                //         }
-                //         return movie
-                //     })
-                // })
-
             }
-
-            // -----------------------------------------------------------------
-
-            // this.setState({
-            //     listMovie: this.state.listMovie.map(movie => {
-            //         if (movie.imdbID === "tt1233227") {
-            //             return { ...movie, Nominated: true }
-            //         }
-            //         return movie
-            //     })
-            // })
-
-
-            console.log(`[listMovie]`, this.state.listMovie)
-
             contents = this.state.listMovie.map((movie) =>
                 <Flip left>
-
                     <li key={movie.imdbID} className="list-group-item" style={{ position: "relative", paddingBottom: "20px" }}>
-                        {/* <i style={{ marginRight: "4px" }} class="fas fa-square-full square"></i> */}
                         <img style={{ marginRight: "10px" }} src={movie.Poster} alt={movie.Title} width="150px" height="150px" onError={(e) => { e.target.onerror = null; e.target.src = "https://via.placeholder.com/150" }}></img>
                         {movie.Title} ({movie.Year})
                     {this.showButton(movie)}
-                        {/* <button type="button" className="btn btn-primary rounded-0 btnNominate"
-                        onClick={this.changeStatus} value={movie.imdbID}>
-                        {movie.Nominated ? "Cancel" : "Nominate"}
-                    </button> */}
                     </li>
                 </Flip>
             )
         }
         this.setState({ listItems: contents })
-
     }
 
     handleChange = async (event) => {
-        // let temp = this.state.searchValue;
         let temp = event.target.value;
         await this.setState({ searchWord: temp })
-        console.log(`searchWord = `, this.state.searchWord)
         if (this.state.searchWord !== "") {
-            console.log("aaa")
-
             this.getMovies()
-        }
-        else {
-            console.log("xxx")
         }
         event.preventDefault();
     }
@@ -350,19 +281,15 @@ class Results extends React.Component {
         let temp = this.state.searchValue;
         this.setState({ searchValue: temp })
         await this.setState({ searchWord: temp })
-        console.log(`searchWord = `, this.state.searchWord)
         if (this.state.searchWord !== "") {
-            console.log("aaa")
 
             this.getMovies()
-        }
-        else {
-            console.log("xxx")
         }
         event.preventDefault();
 
     }
 
+    // to delete movie from nominated list
     cancelMovie = (event) => {
         event.preventDefault();
         let movieKey = event.target.value
@@ -377,33 +304,22 @@ class Results extends React.Component {
         this.showNominatedList()
 
         if (this.state.listMovie !== undefined && this.state.listMovie.length >= 0) {
-            // console.log(`[listMovie after canceling one movie]`, this.state.listMovie)
-
             this.setState({
                 listMovie: this.state.listMovie.map(movie => {
                     if (movieKey === movie.imdbID) {
-                        console.log('moviee keyyyyyyyyyyyyyy', { ...movie, Nominated: false })
-
                         return { ...movie, Nominated: false }
-
                     }
                     return movie;
-
                 })
             })
-
-            console.log(`[Alllll]`, this.state.listMovie)
         }
         this.reloadMovies(this.state.searchWord)
-
     }
 
     showNominatedList() {
         if (localStorage.listOfNominatedMovies !== undefined) {
 
             let NominatedMovieArray = JSON.parse(localStorage.getItem("listOfNominatedMovies"));
-            // to check if it returns an array
-            console.log(`[NominatedMovieArray]`, NominatedMovieArray)
 
             let NominatedContents = "";
 
@@ -415,7 +331,7 @@ class Results extends React.Component {
                         <img style={{ marginRight: "10px" }} src={movie.Poster} alt={movie.Title} width="150px" height="150px" onError={(e) => { e.target.onerror = null; e.target.src = "https://via.placeholder.com/150" }}></img>
 
                         {movie.Title} ({movie.Year})
-                <button style={{ position: "absolute", right: "7px" }} type="button" className="btn btn-success rounded-0 btnNominate"
+                    <button style={{ position: "absolute", right: "7px" }} type="button" className="btn btn-success rounded-0 btnNominate"
                             onClick={this.cancelMovie} value={movie.imdbID}>
                             Cancel
                     </button>
@@ -446,20 +362,15 @@ class Results extends React.Component {
                         </div>
                     </div>
                 </div>
-                {/* end of hero section */}
                 <div className="container">
                     <Modal show={this.state.show} handleClose={this.hideModal}>
                         <b>Congratulations!🎉</b>
                         <p>You have nominated 5 Movies!!!</p>
                     </Modal>
-                    {/* <Search handleSubmit={this.handleChange} /> */}
-
-
                     <div className="row">
                         <div id="results" className="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
                             <p style={{ paddingLeft: "30px", fontWeight: "bold" }}>Result for "<span style={{ color: "#018060", fontWeight: "bold" }}>{this.state.searchWord}</span>"</p>
                             < ul > {this.state.listItems}</ul >
-
                         </div>
                         <div id="nominations" className="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
                             <p style={{ paddingLeft: "30px", fontWeight: "bold" }}>Nomination</p>
