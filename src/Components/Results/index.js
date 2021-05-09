@@ -37,7 +37,7 @@ class Results extends React.Component {
     getMovies = () => {
 
         // to make API call
-        return axios.get(`http://www.omdbapi.com/?apikey=254de20d&type=movie&s=${this.state.searchWord}`).then(response => {
+        return axios.get(`https://www.omdbapi.com/?apikey=254de20d&type=movie&s=${this.state.searchWord}`).then(response => {
 
             // temporary list to add new property to objects (movies)
             if (response.data.Search) {
@@ -60,7 +60,7 @@ class Results extends React.Component {
     reloadMovies = (search) => {
 
         // to make API call
-        return axios.get(`http://www.omdbapi.com/?apikey=254de20d&type=movie&s=${search}`).then(response => {
+        return axios.get(`https://www.omdbapi.com/?apikey=254de20d&type=movie&s=${search}`).then(response => {
 
             // temporary list to add new property to objects (movies)
             if (response.data.Search) {
