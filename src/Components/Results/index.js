@@ -31,6 +31,9 @@ class Results extends React.Component {
     };
 
     componentDidMount() {
+        let initialArray = [];
+        localStorage.setItem("listOfNominatedMovies", JSON.stringify(initialArray));
+
         this.showNominatedList()
     }
 
