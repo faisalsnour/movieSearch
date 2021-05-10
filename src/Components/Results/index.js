@@ -3,7 +3,7 @@ import "./style.css"
 import axios from "axios";
 import Modal from '../Modal'
 import Title from '../Title'
-import Flip from 'react-reveal/Flip';
+// import Flip from 'react-reveal/Flip';
 class Results extends React.Component {
 
     constructor(props) {
@@ -225,13 +225,13 @@ class Results extends React.Component {
                 })
             }
             contents = this.state.listMovie.map((movie) =>
-                <Flip left>
-                    <li key={movie.imdbID} className="list-group-item" style={{ position: "relative", paddingBottom: "20px" }}>
-                        <img style={{ marginRight: "10px" }} src={movie.Poster} alt={movie.Title} width="150px" height="150px" onError={(e) => { e.target.onerror = null; e.target.src = "https://via.placeholder.com/150" }}></img>
-                        {movie.Title} ({movie.Year})
+                // <Flip left>
+                <li key={movie.imdbID} className="list-group-item" style={{ position: "relative", paddingBottom: "20px" }}>
+                    <img style={{ marginRight: "10px" }} src={movie.Poster} alt={movie.Title} width="150px" height="150px" onError={(e) => { e.target.onerror = null; e.target.src = "https://via.placeholder.com/150" }}></img>
+                    {movie.Title} ({movie.Year})
                     {this.showButton(movie)}
-                    </li>
-                </Flip>
+                </li>
+                // </Flip>
             )
         }
         this.setState({ listItems: contents })
@@ -294,18 +294,18 @@ class Results extends React.Component {
             let NominatedContents = "";
 
             NominatedContents = NominatedMovieArray.map((movie) =>
-                <Flip right>
+                // <Flip right>
 
-                    <li key={movie.imdbID} className="list-group-item" style={{ position: "relative", paddingBottom: "20px" }}>
-                        <img style={{ marginRight: "10px" }} src={movie.Poster} alt={movie.Title} width="150px" height="150px" onError={(e) => { e.target.onerror = null; e.target.src = "https://via.placeholder.com/150" }}></img>
+                <li key={movie.imdbID} className="list-group-item" style={{ position: "relative", paddingBottom: "20px" }}>
+                    <img style={{ marginRight: "10px" }} src={movie.Poster} alt={movie.Title} width="150px" height="150px" onError={(e) => { e.target.onerror = null; e.target.src = "https://via.placeholder.com/150" }}></img>
 
-                        {movie.Title} ({movie.Year})
+                    {movie.Title} ({movie.Year})
                     <button style={{ position: "absolute", right: "7px" }} type="button" name="Cancel" className="btn btn-success rounded-0 btnNominate"
-                            onClick={this.cancelMovie} value={movie.imdbID}>
-                            Cancel
+                        onClick={this.cancelMovie} value={movie.imdbID}>
+                        Cancel
                     </button>
-                    </li>
-                </Flip>
+                </li>
+                // </Flip>
             )
             this.setState({ listNominated: NominatedContents })
 
