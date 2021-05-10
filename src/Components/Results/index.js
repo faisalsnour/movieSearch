@@ -163,6 +163,8 @@ class Results extends React.Component {
             let tempLocalStorage = JSON.parse(localStorage.getItem("listOfNominatedMovies"));
             let LocalStorageArray = [];
             LocalStorageArray.push(tempLocalStorage)
+            this.showNominatedList()
+
         }
         this.showNominatedList()
     }
