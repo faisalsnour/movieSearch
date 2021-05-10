@@ -134,7 +134,7 @@ class Results extends React.Component {
                 let nominatedMovie = [];
                 nominatedMovie.push(this.state.TargetedMovie)
                 localStorage.setItem("listOfNominatedMovies", JSON.stringify(nominatedMovie));
-                this.showNominatedList()
+                // this.showNominatedList()
 
             }
             else // if localStorage exists, obtain the value of LocalStorage and then add new movie to it
@@ -151,7 +151,7 @@ class Results extends React.Component {
                     // localStorage.clear()
                     localStorage.setItem("listOfNominatedMovies", JSON.stringify(newLocalStorageValue));
                     // after new movie is added to localStorage run the below function to update nominated list
-                    this.showNominatedList()
+                    // this.showNominatedList()
                     if (newLocalStorageValue.length === 5) {
                         this.showModal()
                     }
