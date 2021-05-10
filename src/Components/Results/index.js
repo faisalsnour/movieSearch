@@ -31,8 +31,11 @@ class Results extends React.Component {
     };
 
     componentDidMount() {
-        let initialArray = [];
-        localStorage.setItem("listOfNominatedMovies", JSON.stringify(initialArray));
+        if (localStorage.listOfNominatedMovies === undefined) {
+
+            let initialArray = [];
+            localStorage.setItem("listOfNominatedMovies", JSON.stringify(initialArray));
+        }
 
         this.showNominatedList()
     }
