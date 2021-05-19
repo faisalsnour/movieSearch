@@ -9,8 +9,7 @@ This single-page web application allows user to search for movies and nominate t
 1. HTML5, CSS, Bootstrap, and JavaScript
 2. React.js
 3. Axios - for making API calls
-4. React Reveal - A package for adding animation to the web-application
-5. Heroku - for deploying the application
+4. Heroku - for deploying the application
 
 ## Features:
 
